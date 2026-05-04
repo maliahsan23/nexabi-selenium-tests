@@ -8,7 +8,13 @@ pipeline {
         }
         stage('Run Tests') {
             steps {
-                sh 'mvn clean test || true'
+                sh '''
+                    docker run --rm \
+                    -v $(pwd):/workspace \
+                    -w /workspace \
+                    markhobson/maven-chrome:jdk-11 \
+                    mvn clean test || true
+                '''
             }
         }
     }
@@ -17,12 +23,8 @@ pipeline {
             junit allowEmptyResults: true, testResults: '**/target/surefire-reports/*.xml'
             emailext(
                 subject: "NexaBI Tests - Build #${BUILD_NUMBER} - SUCCESS",
-                body: """
-Build #${BUILD_NUMBER} - SUCCESS
-Tests: 15/15 Passed
-URL: ${BUILD_URL}
-                """,
-                to: "waliurehman4023@gmail.com"
+                body: "Build #${BUILD_NUMBER} completed. Results: ${BUILD_URL}",
+                to: "maa62390@gmail.com"
             )
         }
     }
