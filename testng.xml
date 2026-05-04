@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="NexaBI Test Suite">
+    <test name="NexaBI Tests">
+        <classes>
+            <class name="tests.NexaBITests"/>
+        </classes>
+    </test>
+</suite>
