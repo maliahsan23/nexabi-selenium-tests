@@ -24,7 +24,7 @@ pipeline {
             emailext(
                 subject: "NexaBI Tests - Build #${BUILD_NUMBER} - SUCCESS",
                 body: "Build #${BUILD_NUMBER} completed. Results: ${BUILD_URL}",
-                to: "${env.GIT_AUTHOR_EMAIL}"
+                to: "waliurehman4023@gmail.com"
             )
         }
     }
