@@ -21,11 +21,14 @@ pipeline {
     post {
         always {
             junit allowEmptyResults: true, testResults: '**/target/surefire-reports/*.xml'
-            emailext(
-                subject: "NexaBI Tests - Build #${BUILD_NUMBER} - SUCCESS",
-                body: "Build #${BUILD_NUMBER} completed. Results: ${BUILD_URL}",
-                to: "waliurehman4023@gmail.com"
-            )
+            script {
+                def pusherEmail = sh(script: "git log -1 --format='%ae'", returnStdout: true).trim()
+                emailext(
+                    subject: "NexaBI Tests - Build #${BUILD_NUMBER} - SUCCESS",
+                    body: "Build #${BUILD_NUMBER} completed. Results: ${BUILD_URL}",
+                    to: "${pusherEmail}"
+                )
+            }
         }
     }
 }
